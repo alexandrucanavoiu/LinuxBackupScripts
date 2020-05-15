@@ -212,7 +212,7 @@ rm -f $error_output_file
 
 if [[ ${backup_ssh_port:-22} != 22 ]]; then args+=( -e "ssh -p $backup_ssh_port" ); fi;
 
-if rsync -arz "${args[@]}" "$dir/$now" "$backup_ssh_user@$backup_ssh_ip:$backup_location/"; then
+if rsync -arz "${args[@]}" "$dir/$now" "$backup_ssh_user@$backup_ssh_ip:$backup_location/" > $error_output_file 2>&1; then
 
 #get the remote hash for file/db
 hash_db_remote=$(ssh $backup_ssh_user@$backup_ssh_ip -p $backup_ssh_port "md5sum $backup_location/$now/$db_name.$date.sql")
